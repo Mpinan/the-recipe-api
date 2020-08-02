@@ -20,9 +20,9 @@ app.use(
 );
 
 //Routes
-app.get("/hello-world", (req, res) => {
-  return res.status(200).send("hello world");
-});
+// app.get("/hello-world", (req, res) => {
+//   return res.status(200).send("hello world");
+// });
 
 //Create
 // app.post("/api/create", (req, res) => {
