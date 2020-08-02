@@ -51,6 +51,6 @@ app.get("/hello-world", (req, res) => {
 //Update
 
 //Delete
-
+module.exports = app;
 //export app to firebase cloud
 exports.app = functions.https.onRequest(app);
