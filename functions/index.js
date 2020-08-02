@@ -10,6 +10,7 @@ admin.initializeApp({
 
 const express = require("express");
 const app = express();
+const db = admin.firestore();
 
 const cors = require("cors");
 app.use(
@@ -24,7 +25,27 @@ app.get("/hello-world", (req, res) => {
 });
 
 //Create
+// app.post("/api/create", (req, res) => {
+//   (async () => {
+//     try {
+//       await db
+//         .collection("recipes")
+//         .doc("/" + req.body.id + "/")
+//         .create({
+//           name: req.body.name,
+//           prepTime: req.body.prepTime,
+//           cookTime: req.body.cookTime,
+//           description: req.body.description,
+//           price: req.body.price,
+//         });
 
+//       return res.status(200).send();
+//     } catch (error) {
+//       console.log(error);
+//       return res.status(500).send(error);
+//     }
+//   })();
+// });
 //Read
 
 //Update
