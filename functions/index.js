@@ -20,9 +20,9 @@ app.use(
 );
 
 //Routes
-// app.get("/hello-world", (req, res) => {
-//   return res.status(200).send("hello world");
-// });
+app.get("/hello-world", (req, res) => {
+  return res.status(200).send("hello world");
+});
 
 //Create
 app.post("/api/create", (req, res) => {
@@ -35,6 +35,9 @@ app.post("/api/create", (req, res) => {
           name: req.body.name,
           prepTime: req.body.prepTime,
           cookTime: req.body.cookTime,
+          difficulty: req.body.difficulty,
+          serves: req.body.serves,
+          ingredients: req.body.ingredients,
           description: req.body.description,
           steps: req.body.steps,
           type: req.body.type,
@@ -52,6 +55,7 @@ app.post("/api/create", (req, res) => {
 //Update
 
 //Delete
-module.exports = app;
+// module.exports = app;
+
 //export app to firebase cloud
 exports.app = functions.https.onRequest(app);

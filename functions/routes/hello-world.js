@@ -1,7 +1,8 @@
-const app = require("../index");
+// const app = require("../index");
+// const functions = require("firebase-functions");
 
-app.get("/hello-world", (req, res) => {
-  return res.status(200).send("hello world");
-});
+// app.get("/hello-world", (req, res) => {
+//   return res.status(200).send("hello world");
+// });
 
-module.exports = app;
+// exports.app = functions.https.onRequest(app);
