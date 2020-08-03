@@ -43,7 +43,7 @@ app.post("/api/create", (req, res) => {
           type: req.body.type,
         });
 
-      return res.status(200).send();
+      return res.status(200).send("New recipe added");
     } catch (error) {
       console.log(error);
       return res.status(500).send(error);
