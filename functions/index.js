@@ -59,27 +59,10 @@ app.get("/api/recipes", (req, res) => {
       let response = [];
 
       await doc.get().then((res) => {
-        // console.log(res.docs);
         let recipes = res.docs;
-        recipes.forEach((recipe) => {
-          const selectedRecipe = {
-            id: recipe.id,
-            name: recipe.data().name,
-            prepTime: recipe.data().prepTime,
-            cookTime: recipe.data().cookTime,
-            difficulty: recipe.data().difficulty,
-            serves: recipe.data().serves,
-            ingredients: recipe.data().ingredients,
-            description: recipe.data().description,
-            steps: recipe.data().steps,
-            type: recipe.data().type,
-          };
-          //   console.log(selectedRecipe);
-          response.push(selectedRecipe);
-          //   console.log(response);
-        });
+        selectedRecipe(recipes, response);
+
         return response;
-        console.log(response);
       });
       return res.status(200).send(response);
     } catch (error) {
@@ -109,4 +92,26 @@ app.get("/api/recipes/:id", (req, res) => {
 // module.exports = app;
 
 //export app to firebase cloud
+
+// helpers
+
+const selectedRecipe = (recipes, response) => {
+  recipes.forEach((recipe) => {
+    const selectedRecipe = {
+      id: recipe.id,
+      name: recipe.data().name,
+      prepTime: recipe.data().prepTime,
+      cookTime: recipe.data().cookTime,
+      difficulty: recipe.data().difficulty,
+      serves: recipe.data().serves,
+      ingredients: recipe.data().ingredients,
+      description: recipe.data().description,
+      steps: recipe.data().steps,
+      type: recipe.data().type,
+    };
+    response.push(selectedRecipe);
+  });
+  return response;
+};
+
 exports.app = functions.https.onRequest(app);
