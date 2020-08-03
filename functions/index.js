@@ -25,7 +25,7 @@ app.get("/hello-world", (req, res) => {
 });
 
 //Create
-app.post("/api/create", (req, res) => {
+app.post("/api/", (req, res) => {
   (async () => {
     try {
       await db
@@ -50,8 +50,59 @@ app.post("/api/create", (req, res) => {
     }
   })();
 });
-//Read
 
+//Read All
+app.get("/api/recipes", (req, res) => {
+  (async () => {
+    try {
+      let doc = db.collection("recipes");
+      let response = [];
+
+      await doc.get().then((res) => {
+        // console.log(res.docs);
+        let recipes = res.docs;
+        recipes.forEach((recipe) => {
+          const selectedRecipe = {
+            id: recipe.id,
+            name: recipe.data().name,
+            prepTime: recipe.data().prepTime,
+            cookTime: recipe.data().cookTime,
+            difficulty: recipe.data().difficulty,
+            serves: recipe.data().serves,
+            ingredients: recipe.data().ingredients,
+            description: recipe.data().description,
+            steps: recipe.data().steps,
+            type: recipe.data().type,
+          };
+          //   console.log(selectedRecipe);
+          response.push(selectedRecipe);
+          //   console.log(response);
+        });
+        return response;
+        console.log(response);
+      });
+      return res.status(200).send(response);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
+//Read with id
+
+app.get("/api/recipes/:id", (req, res) => {
+  (async () => {
+    try {
+      const doc = db.collection("recipes").doc(req.params.id);
+      let recipe = await doc.get();
+      let response = recipe.data();
+      return res.status(200).send(response);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
 //Update
 
 //Delete
