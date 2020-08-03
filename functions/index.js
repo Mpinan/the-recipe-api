@@ -25,27 +25,28 @@ app.use(
 // });
 
 //Create
-// app.post("/api/create", (req, res) => {
-//   (async () => {
-//     try {
-//       await db
-//         .collection("recipes")
-//         .doc("/" + req.body.id + "/")
-//         .create({
-//           name: req.body.name,
-//           prepTime: req.body.prepTime,
-//           cookTime: req.body.cookTime,
-//           description: req.body.description,
-//           price: req.body.price,
-//         });
+app.post("/api/create", (req, res) => {
+  (async () => {
+    try {
+      await db
+        .collection("recipes")
+        .doc("/" + req.body.id + "/")
+        .create({
+          name: req.body.name,
+          prepTime: req.body.prepTime,
+          cookTime: req.body.cookTime,
+          description: req.body.description,
+          steps: req.body.steps,
+          type: req.body.type,
+        });
 
-//       return res.status(200).send();
-//     } catch (error) {
-//       console.log(error);
-//       return res.status(500).send(error);
-//     }
-//   })();
-// });
+      return res.status(200).send();
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
 //Read
 
 //Update
