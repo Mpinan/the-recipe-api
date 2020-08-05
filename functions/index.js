@@ -60,7 +60,7 @@ app.get("/api/recipes", (req, res) => {
 
       await doc.get().then((res) => {
         let recipes = res.docs;
-        selectedRecipe(recipes, response);
+        selectRecipes(recipes, response);
 
         return response;
       });
@@ -95,7 +95,7 @@ app.get("/api/recipes/:id", (req, res) => {
 
 // helpers
 
-const selectedRecipe = (recipes, response) => {
+const selectRecipes = (recipes, response) => {
   recipes.forEach((recipe) => {
     const selectedRecipe = {
       id: recipe.id,
