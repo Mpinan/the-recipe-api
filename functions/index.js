@@ -113,7 +113,19 @@ app.put("/api/update/:id", (req, res) => {
 });
 
 //Delete
+app.delete("/api/delete/:id", (req, res) => {
+  (async () => {
+    try {
+      const doc = db.collection("recipes").doc(req.params.id);
+      await doc.delete();
 
+      return res.status(200).send("recipe updated");
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
 // module.exports = app;
 
 //export app to firebase cloud
