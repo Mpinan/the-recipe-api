@@ -89,30 +89,31 @@ app.get("/api/recipes/:id", (req, res) => {
 //Update
 
 app.put("/api/update/:id", (req, res) => {
-    (async () => {
-      try {
-        const doc = db.collection("recipes").doc(req.params.id);
-        await db doc.update({
-            name: req.body.name,
-            prepTime: req.body.prepTime,
-            cookTime: req.body.cookTime,
-            difficulty: req.body.difficulty,
-            serves: req.body.serves,
-            ingredients: req.body.ingredients,
-            description: req.body.description,
-            steps: req.body.steps,
-            type: req.body.type,
-          });
-  
-        return res.status(200).send("recipe updated");
-      } catch (error) {
-        console.log(error);
-        return res.status(500).send(error);
-      }
-    })();
-  });
+  (async () => {
+    try {
+      const doc = db.collection("recipes").doc(req.params.id);
+      await doc.update({
+        name: req.body.name,
+        prepTime: req.body.prepTime,
+        cookTime: req.body.cookTime,
+        difficulty: req.body.difficulty,
+        serves: req.body.serves,
+        ingredients: req.body.ingredients,
+        description: req.body.description,
+        steps: req.body.steps,
+        type: req.body.type,
+      });
+
+      return res.status(200).send("recipe updated");
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
 
 //Delete
+
 // module.exports = app;
 
 //export app to firebase cloud
