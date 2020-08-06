@@ -1,7 +1,7 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
-var serviceAccount = require("../functions/permissions.json");
+var serviceAccount = require("./permissions.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
