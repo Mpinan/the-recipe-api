@@ -25,7 +25,7 @@ app.get("/hello-world", (req, res) => {
 });
 
 //Create
-app.post("/api/create", (req, res) => {
+app.post("/recipes/create", (req, res) => {
   (async () => {
     try {
       await db
@@ -52,7 +52,7 @@ app.post("/api/create", (req, res) => {
 });
 
 //Read All
-app.get("/api/recipes", (req, res) => {
+app.get("/recipes", (req, res) => {
   (async () => {
     try {
       let doc = db.collection("recipes");
@@ -73,7 +73,7 @@ app.get("/api/recipes", (req, res) => {
 });
 //Read with id
 
-app.get("/api/recipes/:id", (req, res) => {
+app.get("/recipes/:id", (req, res) => {
   (async () => {
     try {
       const doc = db.collection("recipes").doc(req.params.id);
@@ -88,7 +88,7 @@ app.get("/api/recipes/:id", (req, res) => {
 });
 //Update
 
-app.put("/api/update/:id", (req, res) => {
+app.put("/update/recipe/:id", (req, res) => {
   (async () => {
     try {
       const doc = db.collection("recipes").doc(req.params.id);
