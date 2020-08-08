@@ -7,16 +7,16 @@ The idea is to make an RESTful api, filled with some data (recipes) and whoever 
 
 ### Get all recipes
 
-- GET /recipes
+- GET https://us-central1-the-recipe-api.cloudfunctions.net/app/recipes
 
 ### Get 1 recipe
 
-- GET /recipes/id
+- GET https://us-central1-the-recipe-api.cloudfunctions.net/app/recipes/id
 
 ### Post a new recipe
 
-- POST /recipes/create
+- POST https://us-central1-the-recipe-api.cloudfunctions.net/app/recipes/create
 
 ### Update a recipe
 
-- UPDATE/PUT "/update/recipe/:id"
+- UPDATE/PUT https://us-central1-the-recipe-api.cloudfunctions.net/app/update/recipe/:id
