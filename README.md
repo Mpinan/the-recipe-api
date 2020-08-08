@@ -5,15 +5,18 @@ The idea is to make an RESTful api, filled with some data (recipes) and whoever 
 
 ## Endpoints
 
-/recipes
-- GET
-- POST
+### Get all recipes
 
-/recipes(id)
+- GET /recipes
 
-- GET
-- POST
-- UPDATE
-- DELETE
+### Get 1 recipe
 
-I will work in autheritation too so only a user is able to delete or update it's own recipes.
+- GET /recipes/id
+
+### Post a new recipe
+
+- POST /recipes/create
+
+### Update a recipe
+
+- UPDATE/PUT "/update/recipe/:id"
