@@ -1,5 +1,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const bodyParser = require("body-parser");
 
 var serviceAccount = require("./permissions.json");
 
@@ -11,9 +12,13 @@ admin.initializeApp({
 const express = require("express");
 const app = express();
 const db = admin.firestore();
-
 const cors = require("cors");
+
 app.use(
+  bodyParser.json(),
+  bodyParser.urlencoded({
+    extended: true,
+  }),
   cors({
     origin: true,
   })
@@ -23,6 +28,43 @@ app.use(
 app.get("/hello-world", (req, res) => {
   return res.status(200).send("hello world");
 });
+
+//User Routes
+
+//Create user
+app.post("/users/new", (req, res) => {
+  (async () => {
+    try {
+      const auth = admin.auth();
+      auth.createUser({
+        email: req.body.email,
+        password: req.body.password,
+      });
+      return res.status(200).send("Added new user");
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
+
+//Delete user
+app.delete("/users/delete/:id", (req, res) => {
+  (async () => {
+    try {
+      const auth = admin.auth();
+      auth.deleteUser();
+
+      return res.status(200).send("recipe updated");
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
+module.exports = app;
+
+// app.post("/users/delete/:id", (req, res) => {});
 
 //Create
 app.post("/recipes/create", (req, res) => {
