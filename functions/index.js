@@ -31,6 +31,26 @@ app.get("/hello-world", (req, res) => {
 
 //User Routes
 
+//Get all users
+app.get("/users", (req, res) => {
+  (async () => {
+    try {
+      let response = [];
+      const auth = admin.auth();
+      auth.listUsers(1000, nextPageToken).then(function (listUsersResult) {
+        listUsersResult.users.forEach(function (userRecord) {
+          console.log("user", userRecord.toJSON());
+        });
+      });
+
+      return res.status(200).send(users);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
+
 //Create user
 app.post("/users/new", (req, res) => {
   (async () => {
@@ -53,9 +73,9 @@ app.delete("/users/delete/:id", (req, res) => {
   (async () => {
     try {
       const auth = admin.auth();
-      auth.deleteUser();
+      auth.deleteUser(uid);
 
-      return res.status(200).send("recipe updated");
+      return res.status(200).send("Successfully deleted user");
     } catch (error) {
       console.log(error);
       return res.status(500).send(error);
@@ -173,6 +193,17 @@ app.put("/update/recipe/:id", (req, res) => {
 //export app to firebase cloud
 
 // helpers
+
+const selectUsers = (users, response) => {
+  users.forEach((user) => {
+    const selectedUser = {
+      id: user.id,
+      email: user.data().email,
+    };
+    response.push(selectedUser);
+  });
+  return response;
+};
 
 const selectRecipes = (recipes, response) => {
   recipes.forEach((recipe) => {
