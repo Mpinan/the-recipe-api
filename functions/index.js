@@ -71,15 +71,18 @@ app.post("/users/new", (req, res) => {
 app.delete("/users/delete/:id", (req, res) => {
   (async () => {
     try {
-      const user = admin
+      admin
         .auth()
         .deleteUser(req.params.id)
-        .then((res) => {
+        .then(function () {
           return res.status(200).send("User deleted");
+        })
+        .catch(function (error) {
+          res.status(500).send(error.message);
         });
     } catch (error) {
       console.log(error);
-      return res.status(500).send(error);
+      return res.status(500).send(error.message);
     }
   })();
 });
