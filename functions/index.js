@@ -52,19 +52,18 @@ app.get("/users/:id", (req, res) => {
 
 //Create user
 app.post("/users/new", (req, res) => {
-  (async () => {
-    try {
-      const auth = admin.auth();
-      auth.createUser({
-        email: req.body.email,
-        password: req.body.password,
-      });
-      return res.status(200).send("Added new user");
-    } catch (error) {
-      console.log(error);
-      return res.status(500).send(error);
-    }
-  })();
+  const auth = admin.auth();
+  auth
+    .createUser({
+      email: req.body.email,
+      password: req.body.password,
+    })
+    .then((user) => {
+      return res.status(200).send("user added", user);
+    })
+    .catch(function (error) {
+      console.log("Error creating new user:", error);
+    });
 });
 
 //Delete user
@@ -86,8 +85,6 @@ app.delete("/users/delete/:id", (req, res) => {
     }
   })();
 });
-
-// app.post("/users/delete/:id", (req, res) => {});
 
 //Create
 app.post("/recipes/create", (req, res) => {
@@ -179,35 +176,23 @@ app.put("/update/recipe/:id", (req, res) => {
 });
 
 //Delete
-// app.delete("/api/delete/:id", (req, res) => {
-//   (async () => {
-//     try {
-//       const doc = db.collection("recipes").doc(req.params.id);
-//       await doc.delete();
+app.delete("/api/delete/:id", (req, res) => {
+  (async () => {
+    try {
+      const doc = db.collection("recipes").doc(req.params.id);
+      await doc.delete();
 
-//       return res.status(200).send("recipe updated");
-//     } catch (error) {
-//       console.log(error);
-//       return res.status(500).send(error);
-//     }
-//   })();
-// });
-// module.exports = app;
+      return res.status(200).send("recipe updated");
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
 
 //export app to firebase cloud
 
 // helpers
-
-const selectUsers = (users, response) => {
-  users.forEach((user) => {
-    const selectedUser = {
-      id: user.id,
-      email: user.data().email,
-    };
-    response.push(selectedUser);
-  });
-  return response;
-};
 
 const selectRecipes = (recipes, response) => {
   recipes.forEach((recipe) => {
