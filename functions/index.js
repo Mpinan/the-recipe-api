@@ -31,19 +31,18 @@ app.get("/hello-world", (req, res) => {
 
 //User Routes
 
-//Get all users
-app.get("/users", (req, res) => {
+//Get user
+app.get("/users/:id", (req, res) => {
   (async () => {
     try {
-      let response = [];
-      const auth = admin.auth();
-      auth.listUsers(1000, nextPageToken).then(function (listUsersResult) {
-        listUsersResult.users.forEach(function (userRecord) {
-          console.log("user", userRecord.toJSON());
+      console.log(req.params.id, "----");
+      const user = admin
+        .auth()
+        .getUser(req.params.id)
+        .then((user) => {
+          console.log(user.toJSON(), "----");
+          return res.status(200).send(user);
         });
-      });
-
-      return res.status(200).send(users);
     } catch (error) {
       console.log(error);
       return res.status(500).send(error);
@@ -72,17 +71,18 @@ app.post("/users/new", (req, res) => {
 app.delete("/users/delete/:id", (req, res) => {
   (async () => {
     try {
-      const auth = admin.auth();
-      auth.deleteUser(uid);
-
-      return res.status(200).send("Successfully deleted user");
+      const user = admin
+        .auth()
+        .deleteUser(req.params.id)
+        .then((res) => {
+          return res.status(200).send("User deleted");
+        });
     } catch (error) {
       console.log(error);
       return res.status(500).send(error);
     }
   })();
 });
-module.exports = app;
 
 // app.post("/users/delete/:id", (req, res) => {});
 
@@ -94,6 +94,7 @@ app.post("/recipes/create", (req, res) => {
         .collection("recipes")
         .doc("/" + req.body.id + "/")
         .create({
+          uid: req.body.uid,
           name: req.body.name,
           prepTime: req.body.prepTime,
           cookTime: req.body.cookTime,
